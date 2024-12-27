@@ -1,0 +1,78 @@
+.container{
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 80%;;
+    height: 80%;
+    background-color: #03A7B2;
+    box-shadow: 0px 15px 10px 0px #03A7B2 inset;
+    border-radius: 50px;
+    opacity: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.card{
+    background: #FFF7D6;
+    box-shadow: 0px 14.06px 9.37px 0px #03A7B2 inset;
+    border-radius: 46.85px;
+    opacity: 0px;
+    height: 90%;
+    width: 90%;
+    padding: 16px;
+}
+
+.prompt{
+    font-family: JejuHallasan;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 72px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    
+}
+
+.fact{
+    font-family: JejuHallasan;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 48px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;    
+}
+
+.stats{
+   display: flex;
+    gap: 16px;
+   
+}
+
+.stat{
+    border-radius: 30px;
+    opacity: 0px;
+    background: #FFFAE6;
+    display: flex;
+    align-items: center;
+    width: 150px;
+}
+
+.stat > span{
+    font-family: JejuHallasan;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    padding: 12px;
+}
+
+.stat > img{
+    width: 48px;
+    height: 48px;
+
+}
