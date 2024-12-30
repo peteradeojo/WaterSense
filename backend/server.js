@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-import app from "./app.js";
+const app = require("./app.js");
 
 const port = process.env.PORT || 3000;
 
@@ -12,6 +12,6 @@ mongoose
 			console.log(`Server running on port ${port}`);
 		});
 	})
-	.catch((err) => {
+	.catch((err) => {w
 		console.error(err);
 	});

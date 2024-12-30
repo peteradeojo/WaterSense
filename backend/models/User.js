@@ -1,16 +1,24 @@
-import { model, Schema } from "mongoose";
-import {} from 'passport-local-mongoose';
+const mongoose = require("mongoose");
+const plm = require("passport-local-mongoose");
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
 	{
-		username: { type: String, unique: true, required: true },
+		username: {
+			type: String,
+			unique: true,
+			required: true,
+		},
+		role: {
+			type: String,
+			enum: ["player", "instructor"],
+			default: "player",
+		},
 	},
 	{
 		timestamps: true,
 	},
 );
 
-// userSchema.pl
+userSchema.plugin(plm);
 
-
-export default model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
