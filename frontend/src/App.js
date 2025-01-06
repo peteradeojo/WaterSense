@@ -1,11 +1,11 @@
 import './App.css';
 import Background from './components/background/background';
 import FunFact from './components/fun-fact/fun-fact';
-import PopQuiz from './components/pop-quiz/pop-quiz';
 import Leaderboard from './components/leaderboard/leaderboard';
 import LandingPage from './components/landing-page/landing-page';
 import Username from './components/username/username';
 import GameStart from './components/game-start/game-start';
+import Game from './components/game/game';
 
 function App() {
   const isMobile = window.innerWidth <= 768;
@@ -25,11 +25,11 @@ function App() {
     <div className="App">
       <Background>
         {/* <FunFact/> */}
-        {/* <PopQuiz/> */}
         {/* <Leaderboard/> */}
         {/* <LandingPage/> */}
         {/* <Username/> */}
-        <GameStart/>
+        {/* <GameStart/> */}
+        <Game/>
       </Background>
     </div>
   );
