@@ -12,6 +12,6 @@ mongoose
 			console.log(`Server running on port ${port}`);
 		});
 	})
-	.catch((err) => {w
+	.catch((err) => {
 		console.error(err);
 	});
