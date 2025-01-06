@@ -1,20 +1,20 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
 const sessionSchema = new Schema(
 	{
 		sessionId: String,
-		players: { type: [Schema.Types.ObjectId], ref: "User" },
+		players: [
+			{
+				username: String,
+				score: String,
+			}
+		],
 		code: { type: String, required: true },
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
-		},
+		owner: String,
 	},
 	{
 		timestamps: true,
 	},
 );
 
-
-export default model("Session", sessionSchema);
+module.exports = model("Session", sessionSchema);

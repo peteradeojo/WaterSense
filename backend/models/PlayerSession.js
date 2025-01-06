@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const playerSessionSchema = new Schema(
 	{
@@ -16,4 +16,4 @@ const playerSessionSchema = new Schema(
 	{ timestamps: true },
 );
 
-export default model("PlayerSession", playerSessionSchema);
+module.exports = model("PlayerSession", playerSessionSchema);

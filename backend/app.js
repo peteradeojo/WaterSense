@@ -1,10 +1,10 @@
-import express from "express";
-import helmet from "helmet";
-import morgan from "morgan";
-import cors from "cors";
+const express = require("express");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const cors = require("cors");
 
-import auth from "./routes/auth.js";
-import sessions from "./routes/sessions.js";
+const auth = require("./routes/auth.js");
+const sessions = require("./routes/sessions.js");
 
 const app = express();
 
@@ -21,4 +21,4 @@ if (process.env.NODE_ENV != "production") {
 app.use("/auth", auth());
 app.use("/sessions", sessions());
 
-export default app;
+module.exports = app;
