@@ -199,6 +199,7 @@ const Game = ({children}) => {
     }, [gameOver]);
   
     useEffect(() => {
+    if (gameOver) return; // stop if game over
       const collision = robots.some(
         (robot) =>
           Math.abs(robot.x - avatar.x) < 5 && Math.abs(robot.y - avatar.y) < 5
