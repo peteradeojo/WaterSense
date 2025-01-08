@@ -1,7 +1,6 @@
 import './App.css';
 import Background from './components/background/background';
 import FunFact from './components/fun-fact/fun-fact';
-import PopQuiz from './components/pop-quiz/pop-quiz';
 import Leaderboard from './components/leaderboard/leaderboard';
 import LandingPage from './components/landing-page/landing-page';
 import Username from './components/username/username';
@@ -28,7 +27,6 @@ function App() {
     <div className="App">
       <Background>
         {/* <Username/>*/}
-        {/*   <PopQuiz/> */}
         {/* <Joinroom/>*/}
         {/*   <FunFact/> */}
         {/* <LandingPage/>*/}
