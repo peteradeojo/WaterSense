@@ -2,6 +2,8 @@ const { Router } = require("express");
 const { v4: uuid } = require("uuid");
 const Session = require("../models/Session.js");
 
+const socketManager = require("../lib/iomanager.js");
+
 const router = Router();
 
 module.exports = () => {
@@ -46,8 +48,15 @@ module.exports = () => {
 		return res.json({ session });
 	});
 
-	// TODO: Start game
-	router.post("/start", async (req, res) => {});
+	// Start game
+	router.post("/start", async (req, res) => {
+		const { code } = req.body;
+
+		socketManager.io?.to(code).emit("start-game", {
+			time: new Date().valueOf(),
+		});
+		return res.json({ message: "broadcast sent" });
+	});
 
 	// Submit score
 	router.post("/submit-score", async (req, res) => {
@@ -69,6 +78,12 @@ module.exports = () => {
 			session.players[playerIndex].score = score;
 
 			await session.save();
+
+			socketManager.io?.to(code).emit("score-update", {
+				username,
+				score,
+				time: new Date().valueOf(),
+			});
 
 			return res.json({ session });
 		} catch (error) {
