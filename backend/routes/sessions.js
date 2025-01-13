@@ -61,31 +61,31 @@ module.exports = () => {
 	// Submit score
 	router.post("/submit-score", async (req, res) => {
 		try {
-			const { username, score, code } = req.body;
-			const session = await Session.findOne({ code });
+			// const { username, score, code } = req.body;
+			// const session = await Session.findOne({ code });
 
-			if (!session) {
-				return res.status(404).json({ message: "Room not found" });
-			}
+			// if (!session) {
+			// 	return res.status(404).json({ message: "Room not found" });
+			// }
 
-			const playerIndex = session.players.findIndex(
-				(player) => player.username == username,
-			);
+			// const playerIndex = session.players.findIndex(
+			// 	(player) => player.username == username,
+			// );
 
-			if (playerIndex < 0)
-				return res.status(404).json({ message: "player not found." });
+			// if (playerIndex < 0)
+			// 	return res.status(404).json({ message: "player not found." });
 
-			session.players[playerIndex].score = score;
+			// session.players[playerIndex].score = score;
 
-			await session.save();
+			// await session.save();
 
-			socketManager.io?.to(code).emit("score-update", {
-				username,
-				score,
-				time: new Date().valueOf(),
-			});
+			// socketManager.io?.to(code).emit("global-score-update", {
+			// 	username,
+			// 	score,
+			// 	time: new Date().valueOf(),
+			// });
 
-			return res.json({ session });
+			return res.json(req.body);
 		} catch (error) {
 			console.error(error);
 			return res.status(500).json({ message: error });

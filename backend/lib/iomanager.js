@@ -1,5 +1,6 @@
 // socketManager.js
 const socketIO = require("socket.io");
+const Session = require("../models/Session");
 
 class SocketManager {
 	constructor() {
@@ -40,6 +41,38 @@ class SocketManager {
 						socket.broadcast
 							.to(room_code)
 							.emit("new-player", `${username} has joined the room.`);
+					});
+
+					socket.on("submit-score", async ({ username, score, code }) => {
+						/**
+						 * @type {{players: {username: string, score: number}[]}} session
+						 */
+						const session = await Session.findOne({ code });
+
+						if (!session) {
+							return; // res.status(404).json({ message: "Room not found" });
+						}
+
+						let playerIndex = session.players.findIndex(
+							(player) => player.username == username,
+						);
+
+						if (!playerIndex) return;
+
+						session.players[playerIndex].score = score;
+						session.players.sort((a, b) => a.score - b.score);
+						await session.save();
+
+						playerIndex = session.players.findIndex(
+							(player) => player.username == username,
+						);
+
+						socket.emit("score-update", {
+							username,
+							score,
+							position: playerIndex,
+							time: new Date().valueOf(),
+						});
 					});
 				},
 			);
