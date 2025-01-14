@@ -18,6 +18,11 @@ code {
   font-family: JejuHallasan;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 @font-face {
   font-family: 'JejuHallasan'; 
   src: url('./assets/fonts/jejuhallasan-regular.ttf') format('truetype'); 

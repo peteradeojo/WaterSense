@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import styles from './game.module.css';
 import { Howl } from "howler";
 import coin from './../../assets/images/coin.svg';
@@ -18,7 +18,8 @@ import collisionSoundFile from "./../../assets/sounds/collision.wav";
 import scoreSoundFile from "./../../assets/sounds/game-over.wav";
 import gameOverSoundFile from "./../../assets/sounds/game-over.wav";
 import backgroundMusicFile from "./../../assets/sounds/background.mp3";
-
+import { GlobalStateContext } from "./../globalstatecontext";
+import { Navigate } from "react-router-dom";
 
 const ROBOT_COUNT = 6; // Number of robots
 const GAME_DURATION = 5 * 60; // 5 minutes in seconds
@@ -52,7 +53,13 @@ const Game = ({children}) => {
     const scoreSound = new Howl({ src: [scoreSoundFile] });
     const gameOverSound = new Howl({ src: [gameOverSoundFile] });
     const [muted, setMuted] = useState(false);
+    const { globalState, updateUser, updateScore } = useContext(GlobalStateContext);
 
+
+
+    useEffect(() => {
+      updateScore(score);
+    }, [score]);
 
    // Collision Detection
   useEffect(() => {
@@ -281,86 +288,89 @@ const Game = ({children}) => {
 //     setMuted(!muted);
 //   };
 
-    return <div className={styles.game}>
-        <div className={styles.stats}>
+    return (
+      <div className={styles.game}>
+        {globalState.allowed ?
+        <><div className={styles.stats}>
             <div className={styles.stat}>
-                <img src={coin}/>
-                <span>{score}</span>
+              <img src={coin} />
+              <span>{score}</span>
             </div>
             <div className={styles.stat}>
-                <img src={timer}/>
-                <span>{formatTime(timeRemaining)}</span>
+              <img src={timer} />
+              <span>{formatTime(timeRemaining)}</span>
             </div>
             <div className={styles.stat}>
-                <img src={star}/>
-                <span>5</span>
+              <img src={star} />
+              <span>5</span>
             </div>
-        </div>
-        <div className={styles.container}>
-            <div className={styles.card}>
-            <div className={styles.background}
-            ref={gameContainerRef}
-             style={{
-                '--bg-image': `url(${backgroundImage})`,
-            }}>
-                 
-        {/* Popup */}
-        {showPopup && currentQuestion && 
-        <div className={styles.quiz}>
-        <p className={styles.prompt}>{currentQuestion.question}</p>
-        <div className={styles.options}>
-                <span className={styles.option} onClick={() => handleAnswer(true)}>True</span>
-                <span className={styles.option} onClick={() => handleAnswer(false)}>False</span>  
-        </div>
-        </div>}
+          </div><div className={styles.container}>
+              <div className={styles.card}>
+                <div className={styles.background}
+                  ref={gameContainerRef}
+                  style={{
+                    '--bg-image': `url(${backgroundImage})`,
+                  }}>
 
-        {gameOver && <div className={styles.game_over}>Game Over!</div>}
-        <div className={styles.game_board}>
-        {/* Avatar */}
-        <img
-          src={Avatar}
-          alt="Avatar"
-          className={styles.avatar}
-          style={{
-            left: `${avatar.x}%`,
-            top: `${avatar.y}%`,
-          }}
-        />
-        {/* Static Elements with Images */}
-      {staticElements.map((el) => (
-        <img
-          key={el.id}
-          src={el.image}
-          alt={`Element ${el.id}`}
-          style={{
-            position: "absolute",
-            left: `${el.x}%`,
-            top: `${el.y}%`,
-            width: "50px",
-            height: "50px",
-          }}
-        />
-      ))}
-        {/* Robots */}
-        {robots.map((robot, index) => (
-          <img
-            key={index}
-            src={robot.image}
-            alt={`Robot ${index + 1}`}
-            className={styles.robot}
-            style={{
-              left: `${robot.x}%`,
-              top: `${robot.y}%`,
-            }}
-          />
-        ))}
-      </div>
-            </div>
+                  {/* Popup */}
+                  {showPopup && currentQuestion &&
+                    <div className={styles.quiz}>
+                      <p className={styles.prompt}>{currentQuestion.question}</p>
+                      <div className={styles.options}>
+                        <span className={styles.option} onClick={() => handleAnswer(true)}>True</span>
+                        <span className={styles.option} onClick={() => handleAnswer(false)}>False</span>
+                      </div>
+                    </div>}
 
-            </div>
-           
-        </div>
+                  {gameOver && <div className={styles.game_over}>Game Over!</div>}
+                  <div className={styles.game_board}>
+                    {/* Avatar */}
+                    <img
+                      src={Avatar}
+                      alt="Avatar"
+                      className={styles.avatar}
+                      style={{
+                        left: `${avatar.x}%`,
+                        top: `${avatar.y}%`,
+                      }} />
+                    {/* Static Elements with Images */}
+                    {staticElements.map((el) => (
+                      <img
+                        key={el.id}
+                        src={el.image}
+                        alt={`Element ${el.id}`}
+                        style={{
+                          position: "absolute",
+                          left: `${el.x}%`,
+                          top: `${el.y}%`,
+                          width: "50px",
+                          height: "50px",
+                        }} />
+                    ))}
+                    {/* Robots */}
+                    {robots.map((robot, index) => (
+                      <img
+                        key={index}
+                        src={robot.image}
+                        alt={`Robot ${index + 1}`}
+                        className={styles.robot}
+                        style={{
+                          left: `${robot.x}%`,
+                          top: `${robot.y}%`,
+                        }} />
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+            </div></>
+        : <Navigate to="/join-room" />}
     </div>
-}
+          
+    )
+
+          }
+
 
 export default Game;
