@@ -7,7 +7,9 @@ import Username from './components/username/username';
 import GameStart from './components/game-start/game-start';
 import Createroom from './components/createroom/createroom';
 import Joinroom from './components/joinroom/joinroom';
-import SelectRoom from './components/select-room/select-room';
+import Game from './components/game/game';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
 
 function App() {
   const isMobile = window.innerWidth <= 768;
@@ -26,15 +28,13 @@ function App() {
   return (
     <div className="App">
       <Background>
-        {/* <Username/>*/}
-        {/* <Joinroom/>*/}
-        {/*   <FunFact/> */}
-        {/* <LandingPage/>*/}
-        {/*  <GameStart/>*/}
-        {/*   <Leaderboard/>*/}
-        {/*   <Createroom/> */}
-        <SelectRoom/>
-              </Background>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/create-room" element={<Createroom />} />
+          <Route path="/join-room" element={<Joinroom />} />
+          <Route path="/game" element={<Game />} />
+        </Routes>
+      </Background>
     </div>
   );
 }

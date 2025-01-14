@@ -24,6 +24,9 @@
 .options{
     display: flex;
     align-items: center;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center children horizontally */
+    gap: 20px;              /* Add space between spans */
     justify-content: space-evenly;
 }
 
@@ -43,6 +46,7 @@
     cursor: pointer; 
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
     width: 200px;
+
 }
 
 .quiz{
