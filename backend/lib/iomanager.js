@@ -60,14 +60,14 @@ class SocketManager {
 						if (!playerIndex) return;
 
 						session.players[playerIndex].score = score;
-						session.players.sort((a, b) => a.score - b.score);
+						session.players.sort((a, b) => b.score - a.score);
 						await session.save();
 
 						playerIndex = session.players.findIndex(
 							(player) => player.username == username,
 						);
 
-						socket.emit("score-update", {
+						this.io.to(code).emit("score-update", {
 							username,
 							score,
 							position: playerIndex,
