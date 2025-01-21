@@ -83,12 +83,15 @@ class SocketManager {
 
 						console.log(`Score: ${playerIndex}`);
 
-						this.io.to(code).emit("score-update", {
+						const update =  {
 							username,
 							score,
 							position: playerIndex,
 							time: new Date().valueOf(),
-						});
+						};
+
+						this.io.to(code).emit("score-update", update);
+						socket.emit("score-update", update);
 					});
 				},
 			);
