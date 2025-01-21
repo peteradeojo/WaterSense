@@ -113,8 +113,9 @@ class SocketManager {
 							time: new Date().valueOf(),
 						};
 
-						this.io.to(code).emit("score-update", update);
+						// this.io.to(code).emit("score-update", update);
 						socket.emit("score-update", update);
+						this.io.to(code).emit("leaderboard-update", session.players);
 					});
 				},
 			);
