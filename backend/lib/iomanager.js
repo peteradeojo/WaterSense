@@ -17,7 +17,11 @@ class SocketManager {
 
 	initialize(server) {
 		if (!this.io) {
-			this.io = socketIO(server);
+			this.io = socketIO(server, {
+				cors: {
+					origin: '*',
+				}
+			});
 
 			// Set up default connection handling
 			this.io.on(
