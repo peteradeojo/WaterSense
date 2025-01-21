@@ -35,6 +35,7 @@ const CreateRoom = () => {
 
   const handleStart = async () => {
     updateCode(code);
+    updatePermissions(true);
     const res = await startGame({
       code: code,
     });
