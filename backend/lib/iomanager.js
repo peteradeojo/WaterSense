@@ -52,6 +52,9 @@ class SocketManager {
 						 * @type {{players: {username: string, score: number}[]}} session
 						 */
 						const session = await Session.findOne({ code });
+						console.log(
+							`submit-score: user: ${username} score: ${score} code: ${code}`,
+						);
 
 						if (!session) {
 							return; // res.status(404).json({ message: "Room not found" });
@@ -65,30 +68,27 @@ class SocketManager {
 							console.log(
 								`bad message: ${username} ${score} ${code} ${playerIndex}`,
 							);
+							return;
 						}
 
-						if (!playerIndex) return;
+						console.log(`submit-score: found player at @${playerIndex}`);
 
-						if (session.players[playerIndex]) {
-							session.players[playerIndex].score = score;
-							session.players.sort((a, b) => b.score - a.score);
-							await session.save();
+						session.players[playerIndex].score = score;
+						session.players.sort((a, b) => b.score - a.score);
+						await session.save();
 
-							playerIndex = session.players.findIndex(
-								(player) => player.username == username,
-							);
+						playerIndex = session.players.findIndex(
+							(player) => player.username == username,
+						);
 
-							this.io.to(code).emit("score-update", {
-								username,
-								score,
-								position: playerIndex,
-								time: new Date().valueOf(),
-							});
-						} else {
-							console.log(
-								`bad message: ${username} ${score} ${code} ${playerIndex}`,
-							);
-						}
+						console.log(`Score: ${playerIndex}`);
+
+						this.io.to(code).emit("score-update", {
+							username,
+							score,
+							position: playerIndex,
+							time: new Date().valueOf(),
+						});
 					});
 				},
 			);
