@@ -19,8 +19,8 @@ class SocketManager {
 		if (!this.io) {
 			this.io = socketIO(server, {
 				cors: {
-					origin: '*',
-				}
+					origin: "*",
+				},
 			});
 
 			// Set up default connection handling
@@ -61,22 +61,34 @@ class SocketManager {
 							(player) => player.username == username,
 						);
 
+						if (playerIndex < 0) {
+							console.log(
+								`bad message: ${username} ${score} ${code} ${playerIndex}`,
+							);
+						}
+
 						if (!playerIndex) return;
 
-						session.players[playerIndex].score = score;
-						session.players.sort((a, b) => b.score - a.score);
-						await session.save();
+						if (session.players[playerIndex]) {
+							session.players[playerIndex].score = score;
+							session.players.sort((a, b) => b.score - a.score);
+							await session.save();
 
-						playerIndex = session.players.findIndex(
-							(player) => player.username == username,
-						);
+							playerIndex = session.players.findIndex(
+								(player) => player.username == username,
+							);
 
-						this.io.to(code).emit("score-update", {
-							username,
-							score,
-							position: playerIndex,
-							time: new Date().valueOf(),
-						});
+							this.io.to(code).emit("score-update", {
+								username,
+								score,
+								position: playerIndex,
+								time: new Date().valueOf(),
+							});
+						} else {
+							console.log(
+								`bad message: ${username} ${score} ${code} ${playerIndex}`,
+							);
+						}
 					});
 				},
 			);
