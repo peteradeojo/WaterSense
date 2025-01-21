@@ -24,7 +24,7 @@ import { io } from "socket.io-client";
 import GameStart from "../game-start/game-start";
 
 const ROBOT_COUNT = 6; // Number of robots
-const GAME_DURATION = 5 * 60; // 5 minutes in seconds
+const GAME_DURATION = 3 * 60; // 3 minutes in seconds
 const socket = io("https://watersense.up.railway.app", {
   autoConnect: false,
 }); // Server URL
@@ -321,14 +321,14 @@ const Game = ({ children }) => {
 
   // Timer countdown
   useEffect(() => {
-    if (gameOver || timeRemaining <= 0) return;
+    if (!gameStart || gameOver || timeRemaining <= 0) return;
 
     const timerInterval = setInterval(() => {
       setTimeRemaining((prevTime) => prevTime - 1);
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [gameOver, timeRemaining]);
+  }, [gameOver, timeRemaining, gameStart]);
 
   useEffect(() => {
     if (timeRemaining <= 0) {
