@@ -378,102 +378,108 @@ const Game = ({ children }) => {
 
   return (
     <div className={styles.game}>
-      {!gameStart ? (
-        <GameStart />
-      ) : globalState.allowed ? (
-        <>
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <img src={coin} />
-              <span>{score}</span>
+      {globalState.allowed ? (
+        !gameStart ? (
+          <GameStart />
+        ) : (
+          <>
+            <div className={styles.stats}>
+              <div className={styles.stat}>
+                <img src={coin} />
+                <span>{score}</span>
+              </div>
+              <div className={styles.stat}>
+                <img src={timer} />
+                <span>{formatTime(timeRemaining)}</span>
+              </div>
+              <div className={styles.stat}>
+                <img src={star} />
+                <span>{position}</span>
+              </div>
             </div>
-            <div className={styles.stat}>
-              <img src={timer} />
-              <span>{formatTime(timeRemaining)}</span>
-            </div>
-            <div className={styles.stat}>
-              <img src={star} />
-              <span>{position}</span>
-            </div>
-          </div>
-          <div className={styles.container}>
-            <div className={styles.card}>
-              <div
-                className={styles.background}
-                ref={gameContainerRef}
-                style={{
-                  "--bg-image": `url(${backgroundImage})`,
-                }}
-              >
-                {/* Popup */}
-                {showPopup && currentQuestion && (
-                  <div className={styles.quiz}>
-                    <p className={styles.prompt}>{currentQuestion.question}</p>
-                    <div className={styles.options}>
-                      <span
-                        className={styles.option}
-                        onClick={() => handleAnswer(true)}
-                      >
-                        True
-                      </span>
-                      <span
-                        className={styles.option}
-                        onClick={() => handleAnswer(false)}
-                      >
-                        False
-                      </span>
+            <div className={styles.container}>
+              <div className={styles.card}>
+                <div
+                  className={styles.background}
+                  ref={gameContainerRef}
+                  style={{
+                    "--bg-image": `url(${backgroundImage})`,
+                  }}
+                >
+                  {/* Popup */}
+                  {showPopup && currentQuestion && (
+                    <div className={styles.quiz}>
+                      <p className={styles.prompt}>
+                        {currentQuestion.question}
+                      </p>
+                      <div className={styles.options}>
+                        <span
+                          className={styles.option}
+                          onClick={() => handleAnswer(true)}
+                        >
+                          True
+                        </span>
+                        <span
+                          className={styles.option}
+                          onClick={() => handleAnswer(false)}
+                        >
+                          False
+                        </span>
+                      </div>
+                      {showNote && (
+                        <p className={styles.prompt}>{currentQuestion.note}</p>
+                      )}
                     </div>
-                    {showNote && (
-                      <p className={styles.prompt}>{currentQuestion.note}</p>
-                    )}
-                  </div>
-                )}
+                  )}
 
-                {gameOver && <div className={styles.game_over}>Game Over!</div>}
-                <div className={styles.game_board}>
-                  {/* Avatar */}
-                  <img
-                    src={Avatar}
-                    alt="Avatar"
-                    className={styles.avatar}
-                    style={{
-                      left: `${avatar.x}%`,
-                      top: `${avatar.y}%`,
-                    }}
-                  />
-                  {/* Static Elements with Images */}
-                  {staticElements.map((el) => (
+                  {gameOver && (
+                    <div className={styles.game_over}>Game Over!</div>
+                  )}
+                  <div className={styles.game_board}>
+                    {/* Avatar */}
                     <img
-                      key={el.id}
-                      src={el.image}
-                      alt={`Element ${el.id}`}
+                      src={Avatar}
+                      alt="Avatar"
+                      className={styles.avatar}
                       style={{
-                        position: "absolute",
-                        left: `${el.x}%`,
-                        top: `${el.y}%`,
-                        width: "50px",
-                        height: "50px",
+                        left: `${avatar.x}%`,
+                        top: `${avatar.y}%`,
                       }}
                     />
-                  ))}
-                  {/* Robots */}
-                  {robots.map((robot, index) => (
-                    <img
-                      key={index}
-                      src={robot.image}
-                      alt={`Robot ${index + 1}`}
-                      className={styles.robot}
-                      style={{
-                        left: `${robot.x}%`,
-                        top: `${robot.y}%`,
-                      }}
-                    />
-                  ))}
+                    {/* Static Elements with Images */}
+                    {staticElements.map((el) => (
+                      <img
+                        key={el.id}
+                        src={el.image}
+                        alt={`Element ${el.id}`}
+                        style={{
+                          position: "absolute",
+                          left: `${el.x}%`,
+                          top: `${el.y}%`,
+                          width: "50px",
+                          height: "50px",
+                        }}
+                      />
+                    ))}
+                    {/* Robots */}
+                    {robots.map((robot, index) => (
+                      <img
+                        key={index}
+                        src={robot.image}
+                        alt={`Robot ${index + 1}`}
+                        className={styles.robot}
+                        style={{
+                          left: `${robot.x}%`,
+                          top: `${robot.y}%`,
+                        }}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </>
+          </>
+        )
       ) : (
         <Navigate to="/join-room" />
       )}
