@@ -15,9 +15,30 @@ class SocketManager {
 		SocketManager.instance = this;
 	}
 
+	async updateWithRetry (session, playerIndex, score, maxRetries = 3) {
+		for (let i = 0; i < maxRetries; i++) {
+			try {
+				session.players[playerIndex].score = score;
+				session.players.sort((a, b) => b.score - a.score);
+				await session.save();
+				return;
+			} catch (err) {
+				if (err.name !== 'VersionError' || i === maxRetries - 1) {
+					throw err;
+				}
+				// Get fresh session data before retrying
+				session = await Session.findById(session._id);
+			}
+		}
+	};
+
 	initialize(server) {
 		if (!this.io) {
-			this.io = socketIO(server);
+			this.io = socketIO(server, {
+				cors: {
+					origin: "*",
+				},
+			});
 
 			// Set up default connection handling
 			this.io.on(
@@ -48,6 +69,9 @@ class SocketManager {
 						 * @type {{players: {username: string, score: number}[]}} session
 						 */
 						const session = await Session.findOne({ code });
+						console.log(
+							`submit-score: user: ${username} score: ${score} code: ${code}`,
+						);
 
 						if (!session) {
 							return; // res.status(404).json({ message: "Room not found" });
@@ -57,22 +81,41 @@ class SocketManager {
 							(player) => player.username == username,
 						);
 
-						if (!playerIndex) return;
+						if (playerIndex < 0) {
+							console.log(
+								`bad message: ${username} ${score} ${code} ${playerIndex}`,
+							);
+							return;
+						}
 
-						session.players[playerIndex].score = score;
-						session.players.sort((a, b) => a.score - b.score);
-						await session.save();
+						console.log(`submit-score: found player at @${playerIndex}`);
+
+						// try {
+						// 	session.players[playerIndex].score = score;
+						// 	session.players.sort((a, b) => b.score - a.score);
+						// 	await session.save();
+						// } catch (err) {
+						// 	console.error(err);
+						// }
+
+						this.updateWithRetry(session, playerIndex, score, 3);
 
 						playerIndex = session.players.findIndex(
 							(player) => player.username == username,
 						);
 
-						socket.emit("score-update", {
+						console.log(`Score: ${playerIndex}`);
+
+						const update = {
 							username,
 							score,
 							position: playerIndex,
 							time: new Date().valueOf(),
-						});
+						};
+
+						// this.io.to(code).emit("score-update", update);
+						socket.emit("score-update", update);
+						this.io.to(code).emit("leaderboard-update", session.players);
 					});
 				},
 			);

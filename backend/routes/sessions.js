@@ -38,8 +38,7 @@ module.exports = () => {
 		const p = session.players.find((player) => player.username == username);
 		if (p) {
 			return res
-				.status(400)
-				.json({ message: "This username is already a part of this room." });
+				.json({ session, message: "This username is already a part of this room." });
 		}
 
 		session.players.push({ username, score: 0 });
