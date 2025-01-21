@@ -15,6 +15,23 @@ class SocketManager {
 		SocketManager.instance = this;
 	}
 
+	async updateWithRetry (session, playerIndex, score, maxRetries = 3) {
+		for (let i = 0; i < maxRetries; i++) {
+			try {
+				session.players[playerIndex].score = score;
+				session.players.sort((a, b) => b.score - a.score);
+				await session.save();
+				return;
+			} catch (err) {
+				if (err.name !== 'VersionError' || i === maxRetries - 1) {
+					throw err;
+				}
+				// Get fresh session data before retrying
+				session = await Session.findById(session._id);
+			}
+		}
+	};
+
 	initialize(server) {
 		if (!this.io) {
 			this.io = socketIO(server, {
@@ -73,9 +90,15 @@ class SocketManager {
 
 						console.log(`submit-score: found player at @${playerIndex}`);
 
-						session.players[playerIndex].score = score;
-						session.players.sort((a, b) => b.score - a.score);
-						await session.save();
+						// try {
+						// 	session.players[playerIndex].score = score;
+						// 	session.players.sort((a, b) => b.score - a.score);
+						// 	await session.save();
+						// } catch (err) {
+						// 	console.error(err);
+						// }
+
+						this.updateWithRetry(session, playerIndex, score, 3);
 
 						playerIndex = session.players.findIndex(
 							(player) => player.username == username,
@@ -83,7 +106,7 @@ class SocketManager {
 
 						console.log(`Score: ${playerIndex}`);
 
-						const update =  {
+						const update = {
 							username,
 							score,
 							position: playerIndex,
