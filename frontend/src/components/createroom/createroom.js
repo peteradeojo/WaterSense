@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import styles from './createroom.module.css';
-import { createRoom } from "./../api";
-import copy from './../../assets/images/copy.svg';
+import React, { useState, useContext } from "react";
+import styles from "./createroom.module.css";
+import { createRoom, startGame } from "./../api";
+import copy from "./../../assets/images/copy.svg";
+import { useNavigate } from "react-router-dom";
+import { GlobalStateContext } from "./../globalstatecontext";
 
 const CreateRoom = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(2);
   const [code, setCode] = useState("");
   const [copySuccess, setCopySuccess] = useState("");
+  const { globalState, updatePermissions, updateCode } =
+    useContext(GlobalStateContext);
+  const navigate = useNavigate();
 
   const handleImageClick = () => {
     // Convert the state to a string format
@@ -28,6 +33,15 @@ const CreateRoom = () => {
     setSelectedPlayers(event.target.value);
   };
 
+  const handleStart = async () => {
+    updateCode(code);
+    const res = await startGame({
+      code: code,
+    });
+    alert("Game started succesfully!");
+    navigate("/leaderboard");
+  };
+
   const handleSubmit = async () => {
     try {
       const payload = { players: selectedPlayers };
@@ -38,50 +52,51 @@ const CreateRoom = () => {
       console.error("Error sending data", error);
     }
   };
-  
 
   return (
     <div className={styles.username}>
       <div className={styles.container}>
-
-        {
-          code ? <div className={styles.quiz}>
-          <p className={styles.prompt}>INVITATION CODE TO JOIN </p>
-          <div className={styles.input_container} >
-            <div class={styles.styled_input}><span>{code}</span>
-            <img src={copy} onClick={handleImageClick}/>
+        {code ? (
+          <div className={styles.quiz}>
+            <p className={styles.prompt}>INVITATION CODE TO JOIN </p>
+            <div className={styles.input_container}>
+              <div class={styles.styled_input}>
+                <span>{code}</span>
+                <img src={copy} onClick={handleImageClick} />
+              </div>
+              {copySuccess && (
+                <p style={{ color: "green", margin: "10px" }}>{copySuccess}</p>
+              )}
             </div>
-            {copySuccess && <p style={{ color: "green", margin: "10px" }}>{copySuccess}</p>}
+            <div className={styles.options}>
+              <span className={styles.option} onClick={handleStart}>
+                Start Game
+              </span>
+            </div>
           </div>
-        </div>
-
-        :
-
-        <div className={styles.quiz}>
-          <p className={styles.prompt}>SELECT THE NUMBER OF PLAYERS</p>
-          <div className="input-container">
-            <select
-              className={styles.dropdown}
-              value={selectedPlayers}
-              onChange={handleChange}
-            >
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-            </select>
+        ) : (
+          <div className={styles.quiz}>
+            <p className={styles.prompt}>SELECT THE NUMBER OF PLAYERS</p>
+            <div className="input-container">
+              <select
+                className={styles.dropdown}
+                value={selectedPlayers}
+                onChange={handleChange}
+              >
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+              </select>
+            </div>
+            <div className={styles.options}>
+              <span className={styles.option} onClick={handleSubmit}>
+                DONE
+              </span>
+            </div>
           </div>
-          <div className={styles.options}>
-            <span className={styles.option} onClick={handleSubmit}>DONE</span>
-          </div>
-        </div>
-        }
-        
+        )}
       </div>
-
-
-      
-
     </div>
   );
 };
