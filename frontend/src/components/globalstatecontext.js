@@ -8,11 +8,16 @@ export const GlobalStateProvider = ({ children }) => {
   const [globalState, setGlobalState] = useState({
     user: null,
     score: 0,
-    allowed: false
+    allowed: false,
+    code: "",
   });
 
   const updateUser = (user) => {
-    setGlobalState((prevState) => ({ ...prevState, user }));
+    setGlobalState((prevState) => ({ ...prevState, user: user }));
+  };
+
+  const updateCode = (code) => {
+    setGlobalState((prevState) => ({ ...prevState, code: code }));
   };
 
   const updateScore = (score) => {
@@ -20,12 +25,18 @@ export const GlobalStateProvider = ({ children }) => {
   };
 
   const updatePermissions = (permission) => {
-    setGlobalState((prevState) => ({ ...prevState, permission }));
+    setGlobalState((prevState) => ({ ...prevState, allowed: permission }));
   };
 
   return (
     <GlobalStateContext.Provider
-      value={{ globalState, updateUser, updateScore, updatePermissions }}
+      value={{
+        globalState,
+        updateUser,
+        updateScore,
+        updatePermissions,
+        updateCode,
+      }}
     >
       {children}
     </GlobalStateContext.Provider>
