@@ -36,6 +36,13 @@ const Leaderboard = () => {
     });
 
     socket.on("leaderboard-update", (players) => {
+      players = players.map((player, idx) => ({
+        rank: idx + 1,
+        name: player.username,
+        isTop: idx == 0,
+        score: player.score,
+        avatar: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${player.username}`,
+      }));
       setPlayers(players);
     });
 
