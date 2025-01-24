@@ -1,6 +1,6 @@
 # WaterSense Game
 
-![game-screenshot.png](./frontend/src/assets/images/docs-assets/game-screenshot.png)
+![game-screenshot](./frontend/src/assets/images/docs-assets/game-screenshot.jpeg)
 
 
 ## **Inspiration 💡**
