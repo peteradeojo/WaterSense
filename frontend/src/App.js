@@ -7,6 +7,7 @@ import Createroom from "./components/createroom/createroom";
 import Joinroom from "./components/joinroom/joinroom";
 import Game from "./components/game/game";
 import { Routes, Route } from "react-router-dom";
+import HomePage from "./components/homepage/homepage";
 
 function App() {
   const isMobile = window.innerWidth <= 768;
@@ -25,16 +26,15 @@ function App() {
 
   return (
     <div className="App">
-      <Background>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/create-room" element={<Createroom />} />
-          <Route path="/join-room" element={<Joinroom />} />
-          <Route path="/game" element={<Game />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-        </Routes>
-      </Background>
-    </div>
+            <Routes>
+            <Route path="/" element={<HomePage/>} />
+          <Route path="/play" element= {<Background> <LandingPage /> </Background> } />
+          <Route path="/create-room" element={<Background> <Createroom /> </Background> } />
+          <Route path="/join-room" element={<Background> <Joinroom /> </Background> } />
+          <Route path="/game" element={<Background> <Game /> </Background> } />
+          <Route path="/leaderboard" element={<Background> <Leaderboard /> </Background> } />
+            </Routes>
+        </div>
   );
 }
 
