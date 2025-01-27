@@ -1,13 +1,14 @@
 const { Router } = require("express");
 const { v4: uuid } = require("uuid");
 const Session = require("../models/Session.js");
+const limiter = require("../lib/ratelimit.js");
 
 const socketManager = require("../lib/iomanager.js");
 
 const router = Router();
 
 module.exports = () => {
-	router.get("/:id", async (req, res) => {
+	router.get("/:id", limiter, async (req, res) => {
 		const session = await Session.findOne({ code: req.params.id });
 		return res.json({ session });
 	});
@@ -35,14 +36,32 @@ module.exports = () => {
 		const { username, code } = req.body;
 		const session = await Session.findOne({ code });
 
+		if (!session)
+			return res.status(400).json({
+				message: "Invalid session code.",
+			});
+
+		if (session.players.length >= 5) {
+			return res.status(428).json({
+				message: "Game room has reached the player limit",
+			});
+		}
+
 		const p = session.players.find((player) => player.username == username);
 		if (p) {
-			return res
-				.json({ session, message: "This username is already a part of this room." });
+			return res.json({
+				session,
+				message: "This username is already a part of this room.",
+			});
 		}
 
 		session.players.push({ username, score: 0 });
 		await session.save({ reload: true });
+
+		socketManager
+			.getIO()
+			.to(code)
+			.emit("new-player", { username, total: session.players.length });
 
 		return res.json({ session });
 	});

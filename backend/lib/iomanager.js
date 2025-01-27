@@ -90,14 +90,6 @@ class SocketManager {
 
 						console.log(`submit-score: found player at @${playerIndex}`);
 
-						// try {
-						// 	session.players[playerIndex].score = score;
-						// 	session.players.sort((a, b) => b.score - a.score);
-						// 	await session.save();
-						// } catch (err) {
-						// 	console.error(err);
-						// }
-
 						this.updateWithRetry(session, playerIndex, score, 3);
 
 						playerIndex = session.players.findIndex(
