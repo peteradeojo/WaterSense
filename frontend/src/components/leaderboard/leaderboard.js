@@ -14,8 +14,7 @@ const socket = io("https://watersense.up.railway.app", {
 const Leaderboard = () => {
   const { globalState } = useContext(GlobalStateContext);
 
-  const [players, setPlayers] = useState([
-  ]);
+  const [players, setPlayers] = useState([]);
 
   // Handling socket connection
   useEffect(() => {

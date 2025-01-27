@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styles from './playernumber.module.css';
+import React, { useState } from "react";
+import styles from "./playernumber.module.css";
 
 const PlayerNumber = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(2);

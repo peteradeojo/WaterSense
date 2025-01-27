@@ -158,7 +158,7 @@ const Game = ({ children }) => {
   // Collision Detection
   useEffect(() => {
     const collidedElement = staticElements.find(
-      (el) => Math.abs(el.x - avatar.x) < 5 && Math.abs(el.y - avatar.y) < 5 // Adjust collision threshold as needed
+      (el) => Math.abs(el.x - avatar.x) < 5 && Math.abs(el.y - avatar.y) < 5, // Adjust collision threshold as needed
     );
 
     if (collidedElement) {
@@ -218,7 +218,7 @@ const Game = ({ children }) => {
           ...robot,
           x: Math.max(0, Math.min(90, robot.x + (Math.random() * 10 - 5))),
           y: Math.max(0, Math.min(90, robot.y + (Math.random() * 10 - 5))),
-        }))
+        })),
       );
     }, 20000);
 
@@ -240,19 +240,19 @@ const Game = ({ children }) => {
                     ...r,
                     x: Math.max(
                       0,
-                      Math.min(90, r.x + (Math.random() * 30 - 15))
+                      Math.min(90, r.x + (Math.random() * 30 - 15)),
                     ),
                     y: Math.max(
                       0,
-                      Math.min(90, r.y + (Math.random() * 30 - 15))
+                      Math.min(90, r.y + (Math.random() * 30 - 15)),
                     ),
                   }
-                : r
-            )
+                : r,
+            ),
           );
         }, randomSpeed);
         return robot;
-      })
+      }),
     );
 
     return () => intervals.forEach((interval) => clearInterval(interval));
@@ -300,7 +300,7 @@ const Game = ({ children }) => {
     if (gameOver) return; // stop if game over
     const collision = robots.some(
       (robot) =>
-        Math.abs(robot.x - avatar.x) < 5 && Math.abs(robot.y - avatar.y) < 5
+        Math.abs(robot.x - avatar.x) < 5 && Math.abs(robot.y - avatar.y) < 5,
     );
 
     if (collision) {
