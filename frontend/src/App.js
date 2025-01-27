@@ -26,15 +26,55 @@ function App() {
 
   return (
     <div className="App">
-            <Routes>
-            <Route path="/" element={<HomePage/>} />
-          <Route path="/play" element= {<Background> <LandingPage /> </Background> } />
-          <Route path="/create-room" element={<Background> <Createroom /> </Background> } />
-          <Route path="/join-room" element={<Background> <Joinroom /> </Background> } />
-          <Route path="/game" element={<Background> <Game /> </Background> } />
-          <Route path="/leaderboard" element={<Background> <Leaderboard /> </Background> } />
-            </Routes>
-        </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/play"
+          element={
+            <Background>
+              {" "}
+              <LandingPage />{" "}
+            </Background>
+          }
+        />
+        <Route
+          path="/create-room"
+          element={
+            <Background>
+              {" "}
+              <Createroom />{" "}
+            </Background>
+          }
+        />
+        <Route
+          path="/join-room"
+          element={
+            <Background>
+              {" "}
+              <Joinroom />{" "}
+            </Background>
+          }
+        />
+        <Route
+          path="/game"
+          element={
+            <Background>
+              {" "}
+              <Game />{" "}
+            </Background>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <Background>
+              {" "}
+              <Leaderboard />{" "}
+            </Background>
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 

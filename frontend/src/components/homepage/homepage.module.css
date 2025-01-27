@@ -4,114 +4,81 @@
   background-position: center;
   /* height: 100vh;
   width: 100vw;*/
-  padding: 4em; 
+  padding: 4em;
   background-attachment: fixed;
-  
 }
 
-
-.image {
-    width: 100%;
-    max-width: 600px; /* Set a maximum width */
-    height: auto; /* Maintain aspect ratio */
-    margin: 20px auto; /* Center the images */
-    display: block; /* Ensure images are block-level for alignment */
-  }
-   
-.play{
-    background-color: #03A7B2BF; /* Dark teal background */
-    color: white; 
-    font-family: JejuHallasan; 
-    font-size: 24px; 
-    font-weight: bold; 
-    border: 5px solid white; 
-    border-radius: 30px; 
-    padding: 10px 20px; 
-    text-transform: uppercase;
-    outline: none; 
-    cursor: pointer; 
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
-    width: 100%;
-    margin-top: 30px;
-    display: block;
+.play {
+  background-color: #03a7b2bf; /* Dark teal background */
+  color: white;
+  font-family: JejuHallasan;
+  font-size: 24px;
+  font-weight: bold;
+  border: 5px solid white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  margin-top: 30px;
+  display: block;
 }
 .play:hover {
-    background-color: #028899; /* Slightly darker teal */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increase shadow intensity */
-    transform: scale(1.05); /* Slight zoom effect */
-  }
+  background-color: #028899; /* Slightly darker teal */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increase shadow intensity */
+  transform: scale(1.05); /* Slight zoom effect */
+}
 
-.option{  
-    color: white; 
-    font-family: 'JejuHallasan'; 
-    font-style: normal;
-    font-size: 27px; 
-    font-weight: 400; 
-    /* padding: 10px 20px;  */
-    line-height: 150%;
-    text-transform: uppercase;
-    outline: none; 
-    cursor: pointer; 
-    width: 845px;
-    height: 672px;
-    /* top: 50px; */
+.option {
+  color: white;
+  font-family: "JejuHallasan";
+  font-style: normal;
+  font-size: 27px;
+  font-weight: 400;
+  padding: 4em;
+  line-height: 150%;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  /* width: 845px; */
+  /* height: 672px; */
+  /* top: 50px; */
+
+  /* here is where i put the code for the green container */
+  width: auto;
+  height: auto;
+  background-color: #03a7b2;
+  box-shadow: 0px 15px 10px 0px #03a7b2 inset;
+  border-radius: 50px;
+  margin: auto;
+  padding-top: 4em;
+  padding-bottom: 4em;
 }
 .option img {
-    width: 100%;
-    max-width: 400px; /* Set a maximum width */
-    height: auto; /* Maintain aspect ratio */
-    margin: 20px auto; /* Center the images */
-    display: block; /* Ensure images are block-level for alignment */
-  }
+  width: 100%;
+  max-width: 400px; /* Set a maximum width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 20px auto; /* Center the images */
+  display: block; /* Ensure images are block-level for alignment */
+}
 
 .option h1 {
-    margin-bottom: 50px; /* Add spacing below the title */
-  }
-
-  .option h2 {
-    margin-bottom: 20px; /* Add spacing below the title */
-    margin-top: 70px; /* Add spacing above the title */
-  }
-.options{
-    display: flex;
-    align-items: center;
-    flex-direction: column; /* Stack children vertically */
-    /* align-items: center;    Center children horizontally */
-    gap: 20px;              /* Add space between spans */
-    /* justify-content: space-evenly; */
-    max-width: 90%; /* Ensure content is not too wide */
-    margin: 0 auto; /* Center align content */
+  margin-bottom: 50px; /* Add spacing below the title */
 }
 
-.container{
-    /* position: absolute; */
-    /* top: 10%;
-    right: 10%; */
-    width: 80%;
-    height: 400vh;
-    background-color: #03A7B2;
-    box-shadow: 0px 15px 10px 0px #03A7B2 inset;
-    border-radius: 50px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    margin:  auto ;
-    padding-top: 4em ;
-    padding-bottom: 4em ;
-    
+.option h2 {
+  margin-bottom: 20px; /* Add spacing below the title */
+  margin-top: 70px; /* Add spacing above the title */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.options {
+  display: flex;
+  align-items: center;
+  flex-direction: column; /* Stack children vertically */
+  /* align-items: center;    Center children horizontally */
+  gap: 20px; /* Add space between spans */
+  /* justify-content: space-evenly; */
+  max-width: 90%; /* Ensure content is not too wide */
+  margin: 0 auto; /* Center align content */
+}
