@@ -59,9 +59,6 @@ class SocketManager {
 
 					socket.on("join-room", ({ room_code, username }) => {
 						socket.join(room_code);
-						socket.broadcast
-							.to(room_code)
-							.emit("new-player", `${username} has joined the room.`);
 					});
 
 					socket.on("submit-score", async ({ username, score, code }) => {

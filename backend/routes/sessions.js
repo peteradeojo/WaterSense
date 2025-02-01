@@ -22,6 +22,7 @@ module.exports = () => {
 				code,
 				sessionId,
 				owner: req.body.username,
+				limit: Number(req.body.limit),
 			});
 
 			return res.json({ session, username: req.body.username });
@@ -34,6 +35,7 @@ module.exports = () => {
 	// Join session
 	router.post("/join", async (req, res) => {
 		const { username, code } = req.body;
+		console.log(req.body);
 		const session = await Session.findOne({ code });
 
 		if (!session)
@@ -41,7 +43,7 @@ module.exports = () => {
 				message: "Invalid session code.",
 			});
 
-		if (session.players.length >= 5) {
+		if (session.players.length >= session.limit) {
 			return res.status(428).json({
 				message: "Game room has reached the player limit",
 			});
@@ -55,11 +57,12 @@ module.exports = () => {
 			});
 		}
 
+		console.log(session);
+
 		session.players.push({ username, score: 0 });
 		await session.save({ reload: true });
 
-		socketManager
-			.getIO()
+		socketManager.io
 			.to(code)
 			.emit("new-player", { username, total: session.players.length });
 
