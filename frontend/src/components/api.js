@@ -6,9 +6,9 @@ const BASE_URL = "https://watersense.up.railway.app";
 const socket = io("https://watersense.up.railway.app"); // Server URL
 
 // Example: Create Room
-export const createRoom = async () => {
+export const createRoom = async (limit) => {
   try {
-    const response = await axios.post(`${BASE_URL}/sessions`);
+    const response = await axios.post(`${BASE_URL}/sessions`, { limit: limit });
     return response.data["session"]["code"];
   } catch (error) {
     console.error("Error fetching data", error);

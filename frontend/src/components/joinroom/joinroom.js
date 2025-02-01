@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import styles from "./joinroom.module.css";
+import MaxPlayer from "../maxplayer/maxplayer";
 import { joinRoom } from "./../api";
 import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "./../globalstatecontext";
@@ -8,6 +9,7 @@ const Joinroom = ({ children }) => {
   const [username, setUsername] = useState("");
   const [code, setCode] = useState("");
   const [next, setNext] = useState(false);
+  const [limitExceeded, setLimitExceeded] = useState(false);
   const { globalState, updatePermissions, updateCode, updateUser } =
     useContext(GlobalStateContext);
   const navigate = useNavigate();
@@ -34,7 +36,11 @@ const Joinroom = ({ children }) => {
       navigate("/game");
     } catch (error) {
       console.error("Error sending data", error);
-      alert(`Invalid room code! Please try again.`);
+      if (error.response.status == 428) {
+        setLimitExceeded(true);
+      } else {
+        alert(`Invalid room code! Please try again.`);
+      }
     }
   };
 
@@ -58,6 +64,8 @@ const Joinroom = ({ children }) => {
               </span>
             </div>
           </div>
+        ) : limitExceeded ? (
+          <MaxPlayer />
         ) : (
           <div className={styles.quiz}>
             <p className={styles.prompt}>INVITATION CODE TO JOIN </p>
