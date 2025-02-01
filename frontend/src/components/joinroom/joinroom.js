@@ -39,7 +39,7 @@ const Joinroom = ({ children }) => {
       if (error.response.status == 428) {
         setLimitExceeded(true);
       } else {
-        alert(`Invalid room code! Please try again.`);
+        alert(`${error.response.data.message}`);
       }
     }
   };

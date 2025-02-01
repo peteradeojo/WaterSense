@@ -98,8 +98,16 @@ const CreateRoom = () => {
               )}
             </div>
             <div style={{ color: "#ffffff", margin: "10px" }}>
-              <span>Joined players: </span>
-              <span>{joinedPlayers}</span>
+              <p style={{ margin: "10px" }}>
+                <span>Joined players: </span>
+                <span>{joinedPlayers}</span>
+              </p>
+              {Boolean(joinedPlayers) && (
+                <p>
+                  <span>Players: </span>
+                  <span>{players.join(", ")}</span>
+                </p>
+              )}
             </div>
             <div className={styles.options}>
               <span className={styles.option} onClick={handleStart}>
