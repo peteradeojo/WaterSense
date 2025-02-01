@@ -1,17 +1,42 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./createroom.module.css";
 import { createRoom, startGame } from "./../api";
 import copy from "./../../assets/images/copy.svg";
 import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "./../globalstatecontext";
+import { io } from "socket.io-client";
+
+const socket = io("https://watersense.up.railway.app", {
+  autoConnect: false,
+}); // Server URL
 
 const CreateRoom = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(2);
   const [code, setCode] = useState("");
   const [copySuccess, setCopySuccess] = useState("");
+  const [players, setPlayers] = useState([]);
+  const [joinedPlayers, setJoinedPlayers] = useState(0);
   const { globalState, updatePermissions, updateCode } =
     useContext(GlobalStateContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // When connected, console log the socket connection
+    socket.connect();
+    socket.on("connect", () => {
+      console.log("Connected to Socket.IO server");
+    });
+
+    socket.on("new-player", (res) => {
+      setJoinedPlayers(() => res.total);
+      setPlayers((players) => [...players, res.username]);
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const handleImageClick = () => {
     // Convert the state to a string format
@@ -45,9 +70,12 @@ const CreateRoom = () => {
 
   const handleSubmit = async () => {
     try {
-      const payload = { players: selectedPlayers };
-      const response = await createRoom(payload);
+      const response = await createRoom(selectedPlayers);
       setCode(response);
+      socket.emit("join-room", {
+        room_code: response,
+        username: globalState.username,
+      });
       console.log("Data sent successfully:", response);
     } catch (error) {
       console.error("Error sending data", error);
@@ -68,6 +96,10 @@ const CreateRoom = () => {
               {copySuccess && (
                 <p style={{ color: "green", margin: "10px" }}>{copySuccess}</p>
               )}
+            </div>
+            <div style={{ color: "#ffffff", margin: "10px" }}>
+              <span>Joined players: </span>
+              <span>{joinedPlayers}</span>
             </div>
             <div className={styles.options}>
               <span className={styles.option} onClick={handleStart}>
