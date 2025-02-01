@@ -11,6 +11,10 @@ const sessionSchema = new Schema(
 		],
 		code: { type: String, required: true },
 		owner: String,
+		limit: {
+			type: Number,
+			default: 1,
+		},
 	},
 	{
 		timestamps: true,

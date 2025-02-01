@@ -22,6 +22,7 @@ module.exports = () => {
 				code,
 				sessionId,
 				owner: req.body.username,
+				limit: Number(req.body.limit),
 			});
 
 			return res.json({ session, username: req.body.username });
@@ -42,7 +43,7 @@ module.exports = () => {
 				message: "Invalid session code.",
 			});
 
-		if (session.players.length >= 5) {
+		if (session.players.length >= session.limit) {
 			return res.status(428).json({
 				message: "Game room has reached the player limit",
 			});
