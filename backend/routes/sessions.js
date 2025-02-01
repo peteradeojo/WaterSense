@@ -58,8 +58,7 @@ module.exports = () => {
 		session.players.push({ username, score: 0 });
 		await session.save({ reload: true });
 
-		socketManager
-			.getIO()
+		socketManager.io
 			.to(code)
 			.emit("new-player", { username, total: session.players.length });
 
