@@ -52,7 +52,7 @@ module.exports = () => {
 		if (p) {
 			return res.status(400).json({
 				session,
-				message: "This username is already a part of this room.",
+				message: "This username is taken.",
 			});
 		}
 
