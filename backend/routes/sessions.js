@@ -34,6 +34,7 @@ module.exports = () => {
 	// Join session
 	router.post("/join", async (req, res) => {
 		const { username, code } = req.body;
+		console.log(req.body);
 		const session = await Session.findOne({ code });
 
 		if (!session)
@@ -54,6 +55,8 @@ module.exports = () => {
 				message: "This username is already a part of this room.",
 			});
 		}
+
+		console.log(session);
 
 		session.players.push({ username, score: 0 });
 		await session.save({ reload: true });
