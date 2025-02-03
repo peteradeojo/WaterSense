@@ -82,3 +82,8 @@
   max-width: 90%; /* Ensure content is not too wide */
   margin: 0 auto; /* Center align content */
 }
+
+.howTo{
+	text-align: justify;
+	list-style: none;
+}
