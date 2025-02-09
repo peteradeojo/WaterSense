@@ -147,6 +147,9 @@ const Game = ({ children }) => {
   }, [gameOver]);
 
   useEffect(() => {
+    if (!gameStart){
+      return;
+    }
     updateScore(score);
     socket.emit("submit-score", {
       username: globalState.user,
