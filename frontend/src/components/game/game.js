@@ -147,7 +147,7 @@ const Game = ({ children }) => {
   }, [gameOver]);
 
   useEffect(() => {
-    if (!gameStart){
+    if (!gameStart) {
       return;
     }
     updateScore(score);
@@ -313,7 +313,7 @@ const Game = ({ children }) => {
 
   // Update score every 10 seconds
   useEffect(() => {
-    if (gameOver) return;
+    if (gameOver || !gameStart) return;
 
     const scoreInterval = setInterval(() => {
       setScore((prevScore) => prevScore + 10); // Add 10 points
