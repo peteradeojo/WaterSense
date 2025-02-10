@@ -47,12 +47,12 @@ const HomePage = () => {
           <p>
             <ul className={styles.howTo}>
               <li>
-                <strong>STEP ONE - Session Creation:</strong> An educator creates a session
-                and invites students to join.
+                <strong>STEP ONE - Session Creation:</strong> An educator
+                creates a session and invites students to join.
               </li>
               <li>
-                <strong> STEP TWO - Gameplay:</strong> Use the keyboard's arrow keys to move
-                Flo through the maze.
+                <strong> STEP TWO - Gameplay:</strong> Use the keyboard's arrow
+                keys to move Flo through the maze.
               </li>
               <li>
                 <strong>STEP TWO - Scoring:</strong>
@@ -65,7 +65,8 @@ const HomePage = () => {
                 </ul>
               </li>
               <li>
-                <strong>STEP FOUR -  Winning the Game:</strong> The game ends when:
+                <strong>STEP FOUR - Winning the Game:</strong> The game ends
+                when:
                 <ul style={{ listStyleType: "'* '" }}>
                   <li>
                     All questions are answered, and Flo successfully avoids
