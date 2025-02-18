@@ -22,7 +22,8 @@
   },
   "scripts": {
     "dev": "nodemon -r dotenv/config server.js",
-    "lint": "prettier"
+    "lint": "prettier",
+    "build": ""
   },
   "nodemonConfig": {
     "ignore": [
