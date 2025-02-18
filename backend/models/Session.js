@@ -7,7 +7,7 @@ const sessionSchema = new Schema(
 			{
 				username: String,
 				score: String,
-			}
+			},
 		],
 		code: { type: String, required: true },
 		owner: String,
@@ -15,6 +15,7 @@ const sessionSchema = new Schema(
 			type: Number,
 			default: 1,
 		},
+		started: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,

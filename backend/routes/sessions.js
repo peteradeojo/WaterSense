@@ -69,40 +69,18 @@ module.exports = () => {
 	// Start game
 	router.post("/start", async (req, res) => {
 		const { code } = req.body;
-
+		Session.updateOne({ code }, { started: true });
+		
 		socketManager.io?.to(code).emit("start-game", {
 			time: new Date().valueOf(),
 		});
+
 		return res.json({ message: "broadcast sent" });
 	});
 
 	// Submit score
 	router.post("/submit-score", async (req, res) => {
 		try {
-			// const { username, score, code } = req.body;
-			// const session = await Session.findOne({ code });
-
-			// if (!session) {
-			// 	return res.status(404).json({ message: "Room not found" });
-			// }
-
-			// const playerIndex = session.players.findIndex(
-			// 	(player) => player.username == username,
-			// );
-
-			// if (playerIndex < 0)
-			// 	return res.status(404).json({ message: "player not found." });
-
-			// session.players[playerIndex].score = score;
-
-			// await session.save();
-
-			// socketManager.io?.to(code).emit("global-score-update", {
-			// 	username,
-			// 	score,
-			// 	time: new Date().valueOf(),
-			// });
-
 			return res.json(req.body);
 		} catch (error) {
 			console.error(error);

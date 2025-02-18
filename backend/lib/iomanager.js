@@ -70,7 +70,7 @@ class SocketManager {
 							`submit-score: user: ${username} score: ${score} code: ${code}`,
 						);
 
-						if (!session) {
+						if (!session || !session.started) {
 							return; // res.status(404).json({ message: "Room not found" });
 						}
 
