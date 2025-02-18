@@ -23,7 +23,8 @@
   "scripts": {
     "dev": "nodemon -r dotenv/config server.js",
     "lint": "prettier",
-    "build": "echo Hello"
+    "build": "echo Hello",
+    "start": "node server.js"
   },
   "nodemonConfig": {
     "ignore": [
